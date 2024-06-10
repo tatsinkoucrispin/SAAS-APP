@@ -9,12 +9,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { UserButton } from '@clerk/nextjs'
 
 type Props = {}
 
 const InfoBar = (props: Props) => {
   return (
-    <div className="flex flex-row justify-end gap-6 items-center px-4 py-4 w-full dark:bg-black">
+    <div className="flex flex-row justify-end gap-6 items-center px-20 py-4 w-full dark:bg-black">
       <span className="flex items-center rounded-full bg-muted px-3 py-1">
         <Search className="h-4 w-4 mr-2" />
         <Input
@@ -42,6 +43,7 @@ const InfoBar = (props: Props) => {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+      <UserButton />
     </div>
   )
 }

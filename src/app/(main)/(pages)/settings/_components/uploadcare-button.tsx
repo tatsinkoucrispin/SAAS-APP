@@ -1,52 +1,67 @@
-'use client'
-import React, { useEffect, useRef } from 'react'
-import * as LR from '@uploadcare/blocks'
-import { useRouter } from 'next/navigation'
+"use client";
+import React, { useEffect, useRef } from "react";
+import * as LR from "@uploadcare/blocks";
+import { useRouter } from "next/navigation";
+import "@uploadcare/blocks/web/lr-file-uploader-regular.min.css";
 
 type Props = {
-  onUpload?: any
-}
+  onUpload: (e: string) => any;
+};
 
-LR.registerBlocks(LR)
+LR.registerBlocks(LR);
 
 const UploadCareButton = ({ onUpload }: Props) => {
-  const router = useRouter()
+  const router = useRouter();
   const ctxProviderRef = useRef<
     typeof LR.UploadCtxProvider.prototype & LR.UploadCtxProvider
-  >(null)
+  >(null);
 
   useEffect(() => {
     const handleUpload = async (e: any) => {
-      const file = await onUpload(e.detail.cdnUrl)
+      const file = await onUpload(e.detail.cdnUrl);
       if (file) {
-        router.refresh()
+        router.refresh();
       }
-    }
-
-    const currentRef = ctxProviderRef.current
+    };
+    const currentRef = ctxProviderRef.current;
     if (currentRef) {
-      currentRef.addEventListener('file-upload-success', handleUpload)
+      currentRef.addEventListener("file-upload-success", handleUpload);
     }
 
     return () => {
       if (currentRef) {
-        currentRef.removeEventListener('file-upload-success', handleUpload)
+        currentRef.removeEventListener("file-upload-success", handleUpload);
       }
-    }
-  }, [onUpload, router])
-
+    };
+  }, [onUpload, router]);
   return (
     <div>
-      <lr-config ctx-name="my-uploader" pubkey="a9428ff5ff90ae7a64eb" />
-
+      <style jsx>{`
+        .my-config {
+          --darkmode: 0;
+          --h-accent: 223;
+          --s-accent: 100%;
+          --l-accent: 61%;
+        }
+      `}</style>
+      <lr-config
+        ctx-name="my-uploader"
+        pubkey="fec31ce431fde1679ad2"
+        max-local-file-size-bytes="10000000"
+        img-only="true"
+        source-list="local, url, camera, dropbox, facebook, gdrive, gphotos, instagram"
+      ></lr-config>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.39.0/web/lr-file-uploader-regular.min.css"
+      />
       <lr-file-uploader-regular
         ctx-name="my-uploader"
-        css-src={`https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css`}
-      />
-
+        class="my-config"
+      ></lr-file-uploader-regular>
       <lr-upload-ctx-provider ctx-name="my-uploader" ref={ctxProviderRef} />
     </div>
-  )
-}
+  );
+};
 
-export default UploadCareButton
+export default UploadCareButton;
