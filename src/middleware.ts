@@ -3,9 +3,9 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 // Définir les routes publiques
 const isPublicRoute = createRouteMatcher([
   '/',
-  '/api/clerk-webhook',
+/*   '/api/clerk-webhook',
   '/api/drive-activity/notification',
-  '/api/payment/success',
+  '/api/payment/success', */
 ]);
 
 // Définir les routes ignorées
