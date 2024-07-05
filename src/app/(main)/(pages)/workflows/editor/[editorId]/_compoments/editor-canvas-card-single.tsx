@@ -1,36 +1,38 @@
-import { EditorCanvasCardType } from "@/lib/types";
-import { useEditor } from "@/providers/editor-provider";
-import React, { useMemo } from "react";
-import CustomHandle from "./custom-handle";
-import { Position, useNodeId } from "reactflow";
+import { EditorCanvasCardType } from '@/lib/types'
+import { useEditor } from '@/providers/editor-provider'
+import React, { useMemo } from 'react'
+import { Position, useNodeId } from 'reactflow'
+import EditorCanvasIconHelper from './editor-canvas-card-icon-hepler'
+import CustomHandle from './custom-handle'
+import { Badge } from '@/components/ui/badge'
+
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import clsx from "clsx";
-import { Badge } from "@/components/ui/badge"
-import EditorCanvasIconHelper from "./editor-canvas-card-icon-hepler";
+} from '@/components/ui/card'
+import clsx from 'clsx'
 
-type Props = {};
+type Props = {}
 
 const EditorCanvasCardSingle = ({ data }: { data: EditorCanvasCardType }) => {
-  const { dispatch, state } = useEditor();
-  const nodeId = useNodeId();
+  const { dispatch, state } = useEditor()
+  const nodeId = useNodeId()
   const logo = useMemo(() => {
-    return <EditorCanvasIconHelper type={data.type} />;
-  }, [data]);
+    return <EditorCanvasIconHelper type={data.type} />
+  }, [data])
+
   return (
     <>
-      {data.type !== "Trigger" && data.type !== "Google Drive" && (
+      {data.type !== 'Trigger' && data.type !== 'Google Drive' && (
         <CustomHandle
           type="target"
           position={Position.Top}
           style={{ zIndex: 100 }}
         />
       )}
-    <Card
+      <Card
         onClick={(e) => {
           e.stopPropagation()
           const val = state.editor.elements.find((n) => n.id === nodeId)
@@ -45,8 +47,8 @@ const EditorCanvasCardSingle = ({ data }: { data: EditorCanvasCardType }) => {
         className="relative max-w-[400px] dark:border-muted-foreground/70"
       >
         <CardHeader className="flex flex-row items-center gap-4">
-        <div>{logo}</div>
-        <div>
+          <div>{logo}</div>
+          <div>
             <CardTitle className="text-md">{data.title}</CardTitle>
             <CardDescription>
               <p className="text-xs text-muted-foreground/50">
@@ -76,8 +78,8 @@ const EditorCanvasCardSingle = ({ data }: { data: EditorCanvasCardType }) => {
         position={Position.Bottom}
         id="a"
       />
-      </>
-  );
-};
+    </>
+  )
+}
 
-export default EditorCanvasCardSingle;
+export default EditorCanvasCardSingle

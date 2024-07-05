@@ -67,7 +67,9 @@ const Settings = async (props: Props) => {
           userImage={user?.profileImage || ""}
           onUpload={uploadProfileImage}
         />
-        <ProfileForm user={user} onUpdate={updateUserInfo} />
+        <ProfileForm user={user} 
+        onUpdate={updateUserInfo} 
+        />
       </div>
     </div>
   );

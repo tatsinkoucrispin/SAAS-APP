@@ -17,9 +17,11 @@ model User {
   id Int @id @default(autoincrement())
 
   clerkId      String  @unique
-  name         String? 
+  name         String?
   email        String  @unique
   profileImage String?
+  tier         String? @default("Free")
+  credits      String? @default("10")
 
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt

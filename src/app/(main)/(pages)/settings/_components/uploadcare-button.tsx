@@ -58,7 +58,7 @@ const UploadCareButton = ({ onUpload }: Props) => {
       <lr-file-uploader-regular
         ctx-name="my-uploader"
         class="my-config"
-      ></lr-file-uploader-regular>
+      />
       <lr-upload-ctx-provider ctx-name="my-uploader" ref={ctxProviderRef} />
     </div>
   );

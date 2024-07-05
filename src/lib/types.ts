@@ -22,6 +22,7 @@ export type Connection = {
   alwaysTrue?: boolean
   slackSpecial?: boolean
 }
+
 export type EditorCanvasTypes =
   | 'Email'
   | 'Condition'
