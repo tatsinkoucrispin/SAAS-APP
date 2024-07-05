@@ -1,8 +1,8 @@
 import { google } from 'googleapis'
 import { v4 as uuidv4 } from 'uuid'
 import { db } from '@/lib/db'
-import { auth, clerkClient} from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
+import { OauthAccessToken, auth, clerkClient } from '@clerk/nextjs/server'
 
 export async function GET() {
   const oauth2Client = new google.auth.OAuth2(
@@ -19,7 +19,7 @@ export async function GET() {
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
     userId,
     'oauth_google'
-  )
+  ) as unknown as OauthAccessToken[];
 
   const accessToken = clerkResponse[0].token
   oauth2Client.setCredentials({
@@ -30,7 +30,7 @@ export async function GET() {
     version: 'v3',
     auth: oauth2Client,
   })
-  
+
   const channelId = uuidv4()
 
   const startPageTokenRes = await drive.changes.getStartPageToken({})

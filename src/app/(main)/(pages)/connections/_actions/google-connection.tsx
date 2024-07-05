@@ -1,7 +1,7 @@
 'use server'
-import { auth, clerkClient } from '@clerk/nextjs/server'
+import { clerkClient } from '@clerk/clerk-sdk-node'
+import { OauthAccessToken, auth } from '@clerk/nextjs/server'
 import { google } from 'googleapis'
-
 
 export const getFileMetaData = async () => {
   'use server'
@@ -20,7 +20,11 @@ export const getFileMetaData = async () => {
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
     userId,
     'oauth_google'
-  )
+  ) as unknown as OauthAccessToken[];
+
+  if (clerkResponse.length === 0) {
+    return { message: 'No OAuth tokens found' }
+  }
 
   const accessToken = clerkResponse[0].token
 
@@ -34,4 +38,6 @@ export const getFileMetaData = async () => {
   if (response) {
     return response.data
   }
+
+  return { message: 'No response from Google Drive API' }
 }

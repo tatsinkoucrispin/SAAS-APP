@@ -1,5 +1,5 @@
 import { google } from 'googleapis'
-import { auth, clerkClient } from '@clerk/nextjs/server'
+import { OauthAccessToken, auth, clerkClient } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 import { db } from '@/lib/db'
@@ -19,7 +19,7 @@ export async function GET() {
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
     userId,
     'oauth_google'
-  )
+  ) as unknown as OauthAccessToken[];
 
   const accessToken = clerkResponse[0].token
   oauth2Client.setCredentials({
